@@ -1,10 +1,8 @@
 package com.example.kepler.tools;
 
-import java.util.ArrayList;
-import java.util.List;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -12,12 +10,8 @@ import android.content.Intent;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.State;
 import android.net.wifi.WifiManager;
-import android.os.Handler;
-import android.os.Message;
 import android.os.Handler.Callback;
 import android.os.Parcelable;
-import android.util.Log;
-import android.widget.Toast;
 
 
 public class WIFIreceiver extends BroadcastReceiver {
@@ -39,7 +33,19 @@ public class WIFIreceiver extends BroadcastReceiver {
                 State state = networkInfo.getState();
                 boolean isConnected = state.equals(State.CONNECTED);// 当然，这边可以更精确的确定状态
                 if (isConnected) {
-                	callbackfunction.handleMessage(null);
+                	JSONObject jsonobject = new JSONObject();
+            		try {
+            			jsonobject.put("poi", POI_table_SQL.search());
+            			jsonobject.put("lbs", LBS_table_SQL.search());
+            			//HttpTool.post("http://127.0.0.1/", jsonobject.toString());
+            		} catch (JSONException e) {
+            			// TODO Auto-generated catch block
+            			e.printStackTrace();
+            		} 
+//            		  catch (IOException e) {
+//            			// TODO Auto-generated catch block
+//            			e.printStackTrace();
+//            		}
                 } else {
                 	
                 }

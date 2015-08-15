@@ -3,20 +3,18 @@ package com.example.kepler.tools;
 import java.io.File;
 import java.util.ArrayList;
 
-import com.example.kepler.object.LBSInfo;
-import com.example.kepler.object.POI_Info;
-
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.Environment;
 
-public class POI_table_SQL {
-	
-	static SQLiteDatabase db;
-	static String username;
+import com.example.kepler.object.LBSInfo;
+import com.example.kepler.object.POI_Info;
+
+public class LBS_table_SQL {
+static SQLiteDatabase db;
+static String username;
 	public static void init(String userid,Context context)
 	{
 		username = userid;
@@ -26,25 +24,24 @@ public class POI_table_SQL {
 			dirFile.mkdirs();
 		}
 		db = SQLiteDatabase.openOrCreateDatabase(
-				dirFile+"/POI_table.db3",
+				dirFile+"/lbs_table.db3",
 				null);
 	}
 	
-	public static void add(POI_Info poi)
+	public static void add(LBSInfo lbs)
 	{
 		try
 		{
-			db.execSQL("insert into poi values(?,?,?,?,?,?,?,?)",
-				new String[]{
-					  poi.id,
-					  username,
-					  poi.lbsid,
-					  String.valueOf(poi.lat),
-					  String.valueOf(poi.lon),
-					  poi.name,
-					  poi.Type,
-					  null
-				}
+			db.execSQL("insert into poi values(?,?,?,?,?,?,?)",
+					new String[]{
+					      lbs.lbsid, 
+					      username,
+						  String.valueOf(lbs.lat),
+						  String.valueOf(lbs.lng),
+						  null,
+						  String.valueOf(lbs.accuracy),
+						  String.valueOf(lbs.haspois)
+					}
 			);
 			//+ poi.id+ ","
 			//+ String.valueOf(poi.lat)+ ","
@@ -56,17 +53,16 @@ public class POI_table_SQL {
 		}
 		catch(SQLiteException e)
 		{
-			db.execSQL("create table if not exists poi"
+			db.execSQL("create table if not exists lbs"
 					  + "(id varchar(25)," 
 					  + " userid varchar(25)," 
-					  + " lbsid varchar(25),"
 					  + " latitude double,"
 					  + " longitude double,"
-					  + " name varchar(25),"
-					  + " type varchar(25)," 
-					  + " CreatedTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime'))," 
+					  + " CreatedTime CreatedTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime'))," 
+					  + " accuracy double," 
+					  + " haspois boolean,"
 					  + " primary key(id,CreatedTime))");
-					  //db.execSQL("alter table poi_table.poi add id int primary key");
+					  //db.execSQLs("alter table poi_table.poi add id int primary key");
 					  //db.execSQL("alter table poi_table.poi add latitude double");
 					  //db.execSQL("alter table poi_table.poi add longitude double");
 					  //db.execSQL("alter table poi_table.poi add name varchar(25)");
@@ -75,21 +71,19 @@ public class POI_table_SQL {
 		}
 	}
 	
-	public static ArrayList<POI_Info> search(){
+	public static ArrayList<LBSInfo> search(){
 		
 		Cursor cursor = db.rawQuery("select * form poi", null);
-		ArrayList<POI_Info> pois = new ArrayList<POI_Info>();
+		ArrayList<LBSInfo> lbss = new ArrayList<LBSInfo>();
 		while(cursor.moveToNext()){
-			POI_Info poi = new POI_Info();
-			poi.id = cursor.getString(0);
-			poi.lbsid = cursor.getString(1);
-			poi.lat = cursor.getDouble(2);
-			poi.lon = cursor.getDouble(3);
-			poi.name = cursor.getString(4);
-			poi.Type = cursor.getString(5);
-			poi.date = cursor.getString(6);
-			pois.add(poi);
+			LBSInfo lbs = new LBSInfo();
+			lbs.lbsid = cursor.getString(0);
+			lbs.lat = cursor.getDouble(1);
+			lbs.lng = cursor.getDouble(2);
+			lbs.date = cursor.getString(3);
+			lbs.accuracy = cursor.getDouble(4);
+			lbss.add(lbs);
 		}
-		return pois;
+		return lbss;
 	}
 }

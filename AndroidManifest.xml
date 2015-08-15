@@ -3,7 +3,7 @@
     package="com.example.kepler"
     android:versionCode="1"
     android:versionName="1.0" >
-
+	<uses-permission android:name="android.permission.READ_PHONE_STATE" /> 
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="21" />
