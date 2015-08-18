@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import com.example.kepler.LBS.baidu;
 import com.example.kepler.LBS.gaode;
-import com.example.kepler.LBS.tencent;
 import com.example.kepler.object.LBSInfo;
 import com.example.kepler.object.POI_Info;
 import com.example.kepler.tools.LBS_table_SQL;
@@ -23,9 +21,7 @@ import android.os.IBinder;
 import android.os.Message;
 
 public class MainService extends Service{
-	baidu baidu_server;
 	gaode gaode_server;
-	tencent tencent_server;
 	WIFIcallback wificallback;
 	String userid;
 	
@@ -45,19 +41,24 @@ public class MainService extends Service{
 	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
+		super.onStartCommand(intent, flags, startId);
 		// TODO Auto-generated method stub
-		Bundle bundle =  intent.getBundleExtra("username");
-		this.userid = bundle.getString("username");
-		mycallback callback = new mycallback();
-		init(this.getApplicationContext(),callback);
-		return super.onStartCommand(intent, flags, startId);
+		Bundle bundle = intent.getBundleExtra("username");
+		if(bundle!=null){
+			this.userid = bundle.getString("username");
+			mycallback callback = new mycallback();
+			init(this.getApplicationContext(),callback);
+			return 1;
+		}
+		else{
+			return -1;
+		}
 	}
 	
 	@Override
 	public void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		baidu_server.stop();
 	}
 	
 	private void init(Context context,mycallback callback){
