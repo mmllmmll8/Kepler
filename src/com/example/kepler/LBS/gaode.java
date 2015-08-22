@@ -32,7 +32,7 @@ public class gaode implements AMapLocationListener{
 	double Accuracy;
 	String username = null;
 	int time = 10000;
-	int scantime = 1000;
+	int scantime = 10000;
 	int fanwei = 50;
 	Context context = null;
 	HashMap<String, Object> map;

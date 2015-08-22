@@ -45,12 +45,18 @@ public class MainService extends Service{
 	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
+		super.onStartCommand(intent, flags, startId);
 		// TODO Auto-generated method stub
-		Bundle bundle =  intent.getBundleExtra("username");
-		this.userid = bundle.getString("username");
-		mycallback callback = new mycallback();
-		init(this.getApplicationContext(),callback);
-		return super.onStartCommand(intent, flags, startId);
+		//Bundle bundle =  intent.getBundleExtra("username");
+		if(1==1){
+			this.userid = "1111111";
+			mycallback callback = new mycallback();
+			init(this.getApplicationContext(),callback);
+			return 1;
+		}
+		else{
+			return -1;
+		}
 	}
 	
 	@Override

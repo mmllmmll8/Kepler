@@ -19,28 +19,34 @@ static String username;
 	{
 		username = userid;
 		String SDCardPath = Environment.getExternalStorageDirectory().getPath();
-		File dirFile = new File( SDCardPath +"/"+"tables");
+		File dirFile = new File(SDCardPath+"/"+"tables");
 		if (!dirFile.exists()) { 
 			dirFile.mkdirs();
 		}
 		db = SQLiteDatabase.openOrCreateDatabase(
 				dirFile+"/lbs_table.db3",
 				null);
+		db.execSQL("create table if not exists lbs"
+				  + "(id varchar(25)," 
+				  + " userid varchar(25)," 
+				  + " latitude double,"
+				  + " longitude double,"
+				  + " accuracy double," 
+				  + " CreatedTime CreatedTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime')),"
+				  + " primary key(id,CreatedTime))");
 	}
 	
 	public static void add(LBSInfo lbs)
 	{
 		try
 		{
-			db.execSQL("insert into poi values(?,?,?,?,?,?,?)",
+			db.execSQL("insert into lbs values(?,?,?,?,?,datetime())",
 					new String[]{
 					      lbs.lbsid, 
 					      username,
 						  String.valueOf(lbs.lat),
 						  String.valueOf(lbs.lng),
-						  null,
-						  String.valueOf(lbs.accuracy),
-						  String.valueOf(lbs.haspois)
+						  String.valueOf(lbs.accuracy)
 					}
 			);
 			//+ poi.id+ ","
@@ -58,9 +64,8 @@ static String username;
 					  + " userid varchar(25)," 
 					  + " latitude double,"
 					  + " longitude double,"
-					  + " CreatedTime CreatedTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime'))," 
 					  + " accuracy double," 
-					  + " haspois boolean,"
+					  + " CreatedTime CreatedTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime')),"
 					  + " primary key(id,CreatedTime))");
 					  //db.execSQLs("alter table poi_table.poi add id int primary key");
 					  //db.execSQL("alter table poi_table.poi add latitude double");
@@ -72,17 +77,24 @@ static String username;
 	}
 	
 	public static ArrayList<LBSInfo> search(){
-		
-		Cursor cursor = db.rawQuery("select * form poi", null);
 		ArrayList<LBSInfo> lbss = new ArrayList<LBSInfo>();
-		while(cursor.moveToNext()){
-			LBSInfo lbs = new LBSInfo();
-			lbs.lbsid = cursor.getString(0);
-			lbs.lat = cursor.getDouble(1);
-			lbs.lng = cursor.getDouble(2);
-			lbs.date = cursor.getString(3);
-			lbs.accuracy = cursor.getDouble(4);
-			lbss.add(lbs);
+		
+		try{
+			Cursor cursor = db.rawQuery("SELECT * FROM lbs", null);
+			
+			while(cursor.moveToNext()){
+				LBSInfo lbs = new LBSInfo();
+				lbs.lbsid = cursor.getString(0);
+				lbs.lat = cursor.getDouble(1);
+				lbs.lng = cursor.getDouble(2);
+				lbs.date = cursor.getString(3);
+				lbs.accuracy = cursor.getDouble(4);
+				lbss.add(lbs);
+			}
+			cursor.close();
+		}
+		catch(Exception e){
+			System.out.print("haha");
 		}
 		return lbss;
 	}

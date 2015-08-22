@@ -40,7 +40,7 @@ public class getpoi {
 							try {
 								jobject.put("lat", String.valueOf(nextObj.getLatLonPoint().getLatitude()));
 								jobject.put("lng", String.valueOf(nextObj.getLatLonPoint().getLongitude()));
-								jobject.put("name", String.valueOf(nextObj.getAdName()));
+								jobject.put("name", String.valueOf(nextObj.getTitle()));
 								jobject.put("id", String.valueOf(nextObj.getPoiId()));
 								jobject.put("type", String.valueOf(nextObj.getTypeDes()));
 								jobject.put("lbsid", id);

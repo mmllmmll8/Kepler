@@ -21,20 +21,30 @@ public class POI_table_SQL {
 	{
 		username = userid;
 		String SDCardPath = Environment.getExternalStorageDirectory().getPath();
-		File dirFile = new File( SDCardPath +"/"+"tables");
+		File dirFile = new File(SDCardPath+"/"+"tables");
 		if (!dirFile.exists()) { 
 			dirFile.mkdirs();
 		}
 		db = SQLiteDatabase.openOrCreateDatabase(
 				dirFile+"/POI_table.db3",
 				null);
+		db.execSQL("create table if not exists poi"
+				  + "(id varchar(25)," 
+				  + " userid varchar(25)," 
+				  + " lbsid varchar(25),"
+				  + " latitude double,"
+				  + " longitude double,"
+				  + " name varchar(25),"
+				  + " type varchar(25)," 
+				  + " CreatedTime TimeStamp NOT NULL DEFAULT (datetime('now','localtime'))," 
+				  + " primary key(id,CreatedTime))");
 	}
 	
 	public static void add(POI_Info poi)
 	{
 		try
 		{
-			db.execSQL("insert into poi values(?,?,?,?,?,?,?,?)",
+			db.execSQL("insert into poi values(?,?,?,?,?,?,?,datetime())",
 				new String[]{
 					  poi.id,
 					  username,
@@ -42,8 +52,7 @@ public class POI_table_SQL {
 					  String.valueOf(poi.lat),
 					  String.valueOf(poi.lon),
 					  poi.name,
-					  poi.Type,
-					  null
+					  poi.Type
 				}
 			);
 			//+ poi.id+ ","
@@ -76,19 +85,25 @@ public class POI_table_SQL {
 	}
 	
 	public static ArrayList<POI_Info> search(){
-		
-		Cursor cursor = db.rawQuery("select * form poi", null);
 		ArrayList<POI_Info> pois = new ArrayList<POI_Info>();
-		while(cursor.moveToNext()){
-			POI_Info poi = new POI_Info();
-			poi.id = cursor.getString(0);
-			poi.lbsid = cursor.getString(1);
-			poi.lat = cursor.getDouble(2);
-			poi.lon = cursor.getDouble(3);
-			poi.name = cursor.getString(4);
-			poi.Type = cursor.getString(5);
-			poi.date = cursor.getString(6);
-			pois.add(poi);
+		try{
+    		Cursor cursor = db.rawQuery("SELECT * FROM poi", null);
+			while(cursor.moveToNext()){
+				POI_Info poi = new POI_Info();
+				poi.id = cursor.getString(0);
+				poi.userid = cursor.getString(1);
+				poi.lbsid = cursor.getString(2);
+				poi.lat = cursor.getDouble(3);
+				poi.lon = cursor.getDouble(4);
+				poi.name = cursor.getString(5);
+				poi.Type = cursor.getString(6);
+				poi.date = cursor.getString(7);
+				pois.add(poi);
+			}		
+			cursor.close();
+		}
+		catch(Exception e){
+			System.out.print("haha");
 		}
 		return pois;
 	}

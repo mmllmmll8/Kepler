@@ -19,6 +19,7 @@ public class object_to_json {
 				jobject.put("lat",b.lat);
 				jobject.put("lon",b.lon);
 				jobject.put("name",b.name);
+				jobject.put("userid",b.userid);
 				jobject.put("date",b.date);
 				jobject.put("type",b.Type);
 			} catch (JSONException e) {
@@ -40,6 +41,7 @@ public class object_to_json {
 				jobject.put("lon",b.lng);
 				jobject.put("date",b.date);
 				jobject.put("accuracy",b.accuracy);
+				jobject.put("userid",b.userid);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
