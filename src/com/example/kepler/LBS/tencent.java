@@ -14,7 +14,7 @@ import com.tencent.map.geolocation.TencentLocationRequest;
 
 public class tencent{
 	
-		int time = 1000;
+		int time = 60000;
 		Context context = null;
 		Callback callback;
 		
@@ -56,10 +56,7 @@ public class tencent{
 							callback.handleMessage(message);
 						}
 						
-				        // 定位成功
-						synchronized (callback) {
-							callback.handleMessage(new Message());
-						}
+				       
 				    } else {
 				        // 定位失败
 				    	Log.e("tencent", "localing error");

@@ -13,6 +13,7 @@ import com.example.kepler.object.LBSInfo;
 import com.example.kepler.object.POI_Info;
 import com.example.kepler.tools.LBS_table_SQL;
 import com.example.kepler.tools.POI_table_SQL;
+import com.example.kepler.tools.REC_table_SQL;
 import com.example.kepler.tools.WIFIreceiver;
 import android.app.Service;
 import android.content.Context;
@@ -28,7 +29,9 @@ public class MainService extends Service{
 	tencent tencent_server;
 	WIFIcallback wificallback;
 	String userid;
-	
+	MainService(String userid){
+		this.userid = userid;
+	}
 	@Override
 	public IBinder onBind(Intent arg0) {
 		// TODO Auto-generated method stub
@@ -48,15 +51,9 @@ public class MainService extends Service{
 		super.onStartCommand(intent, flags, startId);
 		// TODO Auto-generated method stub
 		//Bundle bundle =  intent.getBundleExtra("username");
-		if(1==1){
-			this.userid = "1111111";
-			mycallback callback = new mycallback();
-			init(this.getApplicationContext(),callback);
-			return 1;
-		}
-		else{
-			return -1;
-		}
+		mycallback callback = new mycallback();
+		init(this.getApplicationContext(),callback);
+		return 1;
 	}
 	
 	@Override
@@ -67,11 +64,12 @@ public class MainService extends Service{
 	}
 	
 	private void init(Context context,mycallback callback){
-		LBS_table_SQL.init(userid, context);
-		POI_table_SQL.init(userid, context);
-		//baidu_server = new baidu(context,callback);
-		//baidu_server.start();
+		//LBS_table_SQL.init(userid, context);
+		//POI_table_SQL.init(userid, context);
+		REC_table_SQL.init(userid, context);
+		baidu_server = new baidu(context,callback);
+		baidu_server.start();
+		tencent_server = new tencent(context,callback);
 		gaode_server = new gaode(context,callback);
-		//tencent_server = new tencent(context,callback);
 	}
 }
