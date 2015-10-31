@@ -13,11 +13,11 @@ import com.example.kepler.object.LBSInfo;
 import com.example.kepler.object.POI_Info;
 import com.example.kepler.tools.LBS_table_SQL;
 import com.example.kepler.tools.POI_table_SQL;
-import com.example.kepler.tools.REC_table_SQL;
 import com.example.kepler.tools.WIFIreceiver;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Handler.Callback;
 import android.os.IBinder;
@@ -29,9 +29,7 @@ public class MainService extends Service{
 	tencent tencent_server;
 	WIFIcallback wificallback;
 	String userid;
-	MainService(String userid){
-		this.userid = userid;
-	}
+	
 	@Override
 	public IBinder onBind(Intent arg0) {
 		// TODO Auto-generated method stub
@@ -51,6 +49,9 @@ public class MainService extends Service{
 		super.onStartCommand(intent, flags, startId);
 		// TODO Auto-generated method stub
 		//Bundle bundle =  intent.getBundleExtra("username");
+		Editor editor = getSharedPreferences("exam",0).edit();
+		editor.putBoolean("service_close",false);
+		editor.commit();
 		mycallback callback = new mycallback();
 		init(this.getApplicationContext(),callback);
 		return 1;
@@ -61,12 +62,14 @@ public class MainService extends Service{
 		// TODO Auto-generated method stub
 		super.onDestroy();
 		baidu_server.stop();
+		Editor editor = getSharedPreferences("exam",0).edit();
+		editor.putBoolean("service_close",true);
+		editor.commit();
 	}
 	
 	private void init(Context context,mycallback callback){
 		//LBS_table_SQL.init(userid, context);
 		//POI_table_SQL.init(userid, context);
-		REC_table_SQL.init(userid, context);
 		baidu_server = new baidu(context,callback);
 		baidu_server.start();
 		tencent_server = new tencent(context,callback);
