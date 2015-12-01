@@ -6,28 +6,31 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.example.kepler.R;
 import com.example.kepler.LBS.baidu;
 import com.example.kepler.LBS.gaode;
 import com.example.kepler.LBS.tencent;
 import com.example.kepler.object.LBSInfo;
 import com.example.kepler.object.POI_Info;
-import com.example.kepler.tools.LBS_table_SQL;
-import com.example.kepler.tools.POI_table_SQL;
-import com.example.kepler.tools.WIFIreceiver;
+
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Handler.Callback;
 import android.os.IBinder;
 import android.os.Message;
+import android.util.Log;
 
 public class MainService extends Service{
 	baidu baidu_server;
 	gaode gaode_server;
 	tencent tencent_server;
-	WIFIcallback wificallback;
 	String userid;
 	
 	@Override
@@ -46,15 +49,16 @@ public class MainService extends Service{
 	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		super.onStartCommand(intent, flags, startId);
 		// TODO Auto-generated method stub
 		//Bundle bundle =  intent.getBundleExtra("username");
-		Editor editor = getSharedPreferences("exam",0).edit();
-		editor.putBoolean("service_close",false);
+		Log.e("ok", "okokokokokok");
+		SharedPreferences share = getSharedPreferences("exam",0);
+		Editor editor = share.edit();
 		editor.commit();
 		mycallback callback = new mycallback();
 		init(this.getApplicationContext(),callback);
-		return 1;
+		flags = START_STICKY;  
+		return super.onStartCommand(intent, flags, startId);  
 	}
 	
 	@Override
@@ -62,14 +66,13 @@ public class MainService extends Service{
 		// TODO Auto-generated method stub
 		super.onDestroy();
 		baidu_server.stop();
-		Editor editor = getSharedPreferences("exam",0).edit();
-		editor.putBoolean("service_close",true);
+		Log.e("ok", "nonononono");
+		SharedPreferences share = getSharedPreferences("exam",0);
+		Editor editor = share.edit();
 		editor.commit();
 	}
 	
 	private void init(Context context,mycallback callback){
-		//LBS_table_SQL.init(userid, context);
-		//POI_table_SQL.init(userid, context);
 		baidu_server = new baidu(context,callback);
 		baidu_server.start();
 		tencent_server = new tencent(context,callback);

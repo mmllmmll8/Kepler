@@ -11,28 +11,33 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler.Callback;
 import android.os.Message;
 import android.os.StrictMode;
+import android.util.Log;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.location.LocationManagerProxy;
 import com.amap.api.location.LocationProviderProxy;
+import com.amap.api.maps2d.AMapUtils;
+import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.services.core.LatLonPoint;
 
 public class gaode implements AMapLocationListener{
 	
 	public static final String GEOFENCE_BROADCAST_ACTION = "com.location.apis.geofencedemo.broadcast";
-	LatLonPoint point;
+	LatLng point;
 	double Accuracy;
 	String username = null;
 	int time = 10000;
-	int scantime = 10000;
+	int scantime = 1000*60;
 	int fanwei = 50;
 	Context context = null;
 	HashMap<String, Object> map;
@@ -43,13 +48,15 @@ public class gaode implements AMapLocationListener{
 	PendingIntent mPendingIntent;
 	protected LocationManagerProxy mLocationManagerProxy;
 	Callback callback;
-	
+	boolean lasttime = true;
+	SharedPreferences share = null;
 	@TargetApi(Build.VERSION_CODES.GINGERBREAD)
 	@SuppressLint("NewApi")
 	public gaode(Context activity,Callback callback)
 	{
 		this.context = activity;
 		this.callback = callback;
+		share = activity.getSharedPreferences("exam", 0);
 		StrictMode.ThreadPolicy policy=new StrictMode.ThreadPolicy.Builder().permitAll().build();
 		StrictMode.setThreadPolicy(policy);
 		init();
@@ -60,8 +67,9 @@ public class gaode implements AMapLocationListener{
 
 	//初始化定位
 	protected void init() {
-	 
-		mLocationManagerProxy = LocationManagerProxy.getInstance(this.context.getApplicationContext());
+		Log.e("ok", "okokok");
+		mLocationManagerProxy = LocationManagerProxy.getInstance(
+				this.context.getApplicationContext());
 		
 		//此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
 		//注意设置合适的定位时间的间隔，并且在合适时间调用removeUpdates()方法来取消定位请求
@@ -70,7 +78,7 @@ public class gaode implements AMapLocationListener{
 		mLocationManagerProxy.requestLocationData(
 				LocationProviderProxy.AMapNetwork, 
 				scantime, 
-				15, 
+				80, 
 				this);
 		mLocationManagerProxy.setGpsEnable(true);
 	}
@@ -81,33 +89,51 @@ public class gaode implements AMapLocationListener{
 	@Override
 	public void onLocationChanged(AMapLocation amapLocation) {
 		// TODO Auto-generated method stub
-		
+		Log.e("ok", String.valueOf(amapLocation.getAMapException().getErrorCode()));
 		if(amapLocation != null && amapLocation.getAMapException().getErrorCode() == 0){
 	        //获取位置信息
+		
 	        Double geoLat = amapLocation.getLatitude();
 	        Double geoLng = amapLocation.getLongitude();
-	        Accuracy = amapLocation.getAccuracy();
-	        JSONObject job = new JSONObject();
+	        String city = amapLocation.getCityCode();
+	        Editor edit = share.edit();
+	        JSONObject gaode = new JSONObject();
 	        try {
-				job.put("lat", String.valueOf(geoLat));
-				job.put("lng", String.valueOf(geoLng));
-				job.put("accuracy", String.valueOf(Accuracy));
-				Date now=new Date();
-				String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(now);
-				getpoi.start(date, new LatLonPoint(geoLat, geoLng), context, callback);
-				job.put("lbsid", date);
-			} catch (JSONException e) {
+				gaode.put("lat", String.valueOf(geoLat));
+				gaode.put("lng", String.valueOf(geoLng));
+	        } catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	        Message message = new Message();
-	        Bundle bundle = new Bundle();
-	        bundle.putString("type", "record");
-	        bundle.putString("record", job.toString());
-	        message.setData(bundle);
-	        synchronized (callback) {
-				callback.handleMessage(message);
-			}
+	        
+			edit.putString("gaode", gaode.toString());
+			edit.commit();
+	        Log.e("latlng", String.valueOf(geoLat)+" "+ String.valueOf(geoLng));
+	        LatLng nowll = new LatLng(geoLat, geoLng);
+	        //Accuracy = amapLocation.getAccuracy();
+	        Accuracy = 500;
+	        //搞清楚什么时候适合拿pois
+	        //当两次定位没有超出距离而且上次定位超出了距离
+	        if(point!=null){
+	        	if((AMapUtils.calculateLineDistance(nowll,point)<=80)){
+	        		if(lasttime){
+	        			Log.e("latlng", "record");
+			        	Date now=new Date();
+						String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(now);
+						getpoi.start(
+								date, 
+								Accuracy,
+								new LatLonPoint(30.557605,104.003185), 
+								city,
+								context);
+						lasttime = false;
+	        		}
+		        }
+	        	else{
+	        		lasttime = true;
+	        	}
+	        }
+			point = new LatLng(geoLat, geoLng);
 	    }
 	}
 	
