@@ -1,5 +1,4 @@
 package com.example.mulewen.newkepler.LBS;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -65,12 +64,16 @@ public class gaode implements AMapLocationListener{
 	//list_to_json
 	
 
+	//��ʼ����λ
 	protected void init() {
 		Log.e("ok", "okokok");
 		mLocationManagerProxy = LocationManagerProxy.getInstance(
 				this.context.getApplicationContext());
 		
-
+		//�˷���Ϊÿ���̶�ʱ��ᷢ��һ�ζ�λ����Ϊ�˼��ٵ������Ļ������������ģ�
+		//ע�����ú��ʵĶ�λʱ��ļ���������ں���ʱ�����removeUpdates()������ȡ����λ����
+		//�ڶ�λ�������ں��ʵ��������ڵ���destroy()����     
+		//����������ʱ��Ϊ-1����λֻ��һ��
 		mLocationManagerProxy.requestLocationData(
 				LocationProviderProxy.AMapNetwork, 
 				scantime, 
@@ -79,12 +82,15 @@ public class gaode implements AMapLocationListener{
 		mLocationManagerProxy.setGpsEnable(true);
 	}
 
+	//��λ�÷����仯���߶�λ���ʱ�䵽ʱ�����ķ���
+	//��һ�ζ�λ֮����ϵ���Χ��
+	//�����¼�ʱ������ƶ��� �ظ���γ�ȣ����������������ѯpoi����������ܵ�
 	@Override
 	public void onLocationChanged(AMapLocation amapLocation) {
 		// TODO Auto-generated method stub
 		Log.e("ok", String.valueOf(amapLocation.getAMapException().getErrorCode()));
 		if(amapLocation != null && amapLocation.getAMapException().getErrorCode() == 0){
-
+	        //��ȡλ����Ϣ
 		
 	        Double geoLat = amapLocation.getLatitude();
 	        Double geoLng = amapLocation.getLongitude();
@@ -104,8 +110,10 @@ public class gaode implements AMapLocationListener{
 	        Log.e("latlng", String.valueOf(geoLat)+" "+ String.valueOf(geoLng));
 	        LatLng nowll = new LatLng(geoLat, geoLng);
 	        //Accuracy = amapLocation.getAccuracy();
-	        Accuracy = 500;
-
+	        Accuracy = amapLocation.getAccuracy();
+	        Accuracy=Accuracy<100?100:Accuracy;
+	        //�����ʲôʱ���ʺ���pois
+	        //�����ζ�λû�г�����������ϴζ�λ�����˾���
 	        if(point!=null){
 	        	if((AMapUtils.calculateLineDistance(nowll,point)<=80)){
 	        		if(lasttime){
@@ -115,9 +123,16 @@ public class gaode implements AMapLocationListener{
 						getpoi.start(
 								date, 
 								Accuracy,
-								new LatLonPoint(30.557605,104.003185), 
+								new LatLonPoint(geoLat, geoLng),
 								city,
 								context);
+//                     new LatLonPoint(30.557973,104.001632)
+//						newgetpoi.start(
+//								date, 
+//								Accuracy, 
+//								new LatLonPoint(30.557605,104.003185), 
+//								city, 
+//								context);
 						lasttime = false;
 	        		}
 		        }

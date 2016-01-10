@@ -1,4 +1,4 @@
-package com.example.mulewen.newkepler.object;
+package com.example.kepler.object;
 
 public class UserInfo {
 	String name;

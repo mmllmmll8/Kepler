@@ -23,29 +23,36 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.os.Bundle;
-import android.os.Handler.Callback;
-import android.os.Message;
 import android.util.Log;
 
 public class getpoi {
-	public static void start(final String date,double error,LatLonPoint point ,String city,final Context context){
-		Query query = new Query("", "141200", city);
+	public static void start(
+			final String date,
+			double error,
+			LatLonPoint point ,
+			String city,
+			final Context context){
+		Query query = new Query("", 
+				"050000|060000|070000|080000|090000|100000|120200|190400|" +
+				"110000|120000|130000|140000|150000|200000|190000|141200|" +
+				"050100|050200|050300|050400|050500|050600|050700|140500|" +
+				"050800|050900|060100|060200|060300|060400|060600|060700|190403|" +
+				"060800|080100|080200|080300|080500|080600|090100|120300|120303", city);
         query.setPageSize(30);
 		PoiSearch poisearch = new PoiSearch(context, query);
 		poisearch.setOnPoiSearchListener(new OnPoiSearchListener(){
 			@Override
 			public void onPoiSearched(PoiResult arg0, int arg1) {
 				// TODO Auto-generated method stub
-				if(arg1 == 0){//判断查询状态，0为成功
-					if (arg0 != null&&arg0.getQuery()!=null) {//判断是否有数据返回
+				if(arg1 == 0){
+					if (arg0 != null&&arg0.getQuery()!=null) {
 						List<PoiItem> poiItems = arg0.getPois();
-						if(poiItems!=null){//判断是否有数据返回
+						if(poiItems!=null){
 							Iterator itr = poiItems.iterator();
 							SharedPreferences share = context.getSharedPreferences("exam",context.MODE_PRIVATE);
 							String records = share.getString("records", "");
 							JSONArray recs = null;
-							if(records==""){ //判断之前有没有记录保存在本地缓存，没有则初始化对象数组
+							if(records==""){ 
 								recs = new JSONArray();
 							}else{
 								try {
@@ -56,7 +63,7 @@ public class getpoi {
 								}
 							}
 							//poiinfo
-							JSONArray pois = new JSONArray();
+							JSONArray jarray = new JSONArray();
 							while (itr.hasNext()) {
 								JSONObject jobject = new JSONObject();
 								PoiItem nextObj = (PoiItem) itr.next();
@@ -86,11 +93,11 @@ public class getpoi {
 									e.printStackTrace();
 								}
 								Log.e("poi",jobject.toString());
-								pois.put(jobject);
+								jarray.put(jobject);
 							}
-
 							//lbsinfo
 							JSONArray lbss = new JSONArray();
+							
 							try {
 								String gaode = share.getString("gaode", "");
 								lbss.put(new JSONObject(gaode));
@@ -102,32 +109,33 @@ public class getpoi {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
-							
-							JSONObject rec = new JSONObject();
-							try {
-								rec.put("poiinfo", pois);
-								rec.put("lbsinfo", lbss.toString());
-								rec.put("date", date);
-								String userid = null;
+							if(jarray.length()!=0){
+								JSONObject rec = new JSONObject();
 								try {
-									userid = URLEncoder.encode(share.getString("id", ""),"utf-8");
-								} catch (UnsupportedEncodingException e) {
+									
+									rec.put("poiinfo", jarray);
+									rec.put("lbsinfo", lbss.toString());
+									rec.put("date", date);
+									String userid = null;
+									try {
+										userid = URLEncoder.encode(share.getString("id", ""),"utf-8");
+									} catch (UnsupportedEncodingException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+									rec.put("userid",userid);
+								} catch (JSONException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
-								rec.put("userid",userid);
-							} catch (JSONException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+								recs.put(rec);
+								Log.e("rec", recs.toString());
+								Editor edit = share.edit();
+								edit.putString("records", recs.toString());
+								edit.commit();
+								Shownotification(context);
 							}
-							recs.put(rec);
-							Log.e("rec", recs.toString());
-							Editor edit = share.edit();
-							edit.putString("records", recs.toString());
-							edit.commit();
-							Shownotification(context);
 						}
-						
 //						Message message = new Message();
 //						Bundle bundle = new Bundle();
 //						bundle.putString("type", "pois");
@@ -137,26 +145,24 @@ public class getpoi {
 					}
 				}
 			}
-
-			
 	});
 	poisearch.setBound(new SearchBound(point, (int) error));
 	poisearch.searchPOIAsyn();
 }
 	
 	public static void Shownotification(Context context) {
-		 String ns = Context.NOTIFICATION_SERVICE;
-		 NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(ns);
-		 int icon = com.example.mulewen.newkepler.R.drawable.ic_launcher;
-		 CharSequence tickerText = "Notice from Kepler";
-		 long when = System.currentTimeMillis();
-
-		 Notification notification = new Notification(icon,tickerText,when);
-	     CharSequence contentTitle = "New location!";
-		 CharSequence contentText = "New sites needed to be signed!";
-		 Intent notificationIntent = new Intent(context,List.class);
-		 PendingIntent contentIntent = PendingIntent.getActivity(context,0,notificationIntent,0);
-		 notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
-		 mNotificationManager.notify(0,notification);// TODO Auto-generated method stub
+//		 String ns = Context.NOTIFICATION_SERVICE;
+//		 NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(ns);
+//		 int icon = com.example.kepler.R.drawable.ic_launcher; //֪ͨͼ��
+//		 CharSequence tickerText = "Notice from Kepler"; //״̬����ʾ��֪ͨ�ı���ʾ
+//		 long when = System.currentTimeMillis(); //֪ͨ������ʱ�䣬����֪ͨ��Ϣ����ʾ
+//		 //����������Գ�ʼ�� Nofification
+//		 Notification notification = new Notification(icon,tickerText,when);
+//	     CharSequence contentTitle = "New location!"; //֪ͨ������
+//		 CharSequence contentText = "New sites needed to be signed!"; //֪ͨ������
+//		 Intent notificationIntent = new Intent(context,List.class); //�����֪ͨ��Ҫ��ת��Activity
+//		 PendingIntent contentIntent = PendingIntent.getActivity(context,0,notificationIntent,0);
+//		 notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+//		 mNotificationManager.notify(0,notification);// TODO Auto-generated method stub
 	}
 }

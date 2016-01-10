@@ -1,9 +1,10 @@
-package com.example.mulewen.newkepler.object;
+package com.example.mulewen.newkepler.;
 
 import java.util.ArrayList;
 
 
 public class LBSInfo {
+	public String userid;
 	public String lbsid;
 	public double lat;
 	public double lng;
