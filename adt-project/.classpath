@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
+	<classpathentry exported="true" kind="lib" path="libs/AMap_2DMap_V2.3.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/AMap_Services_V2.7.0_20151125.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/Android_Cloud_V1.1.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/Android_Location_V1.3.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/BaiduLBS_Android.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/okhttp-2.4.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/okio-1.4.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/TencentLocationSDK_v4.1_r161859.jar"/>
+	<classpathentry kind="output" path="bin/classes"/>
+</classpath>

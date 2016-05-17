@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+	<storageModule moduleId="org.eclipse.cdt.core.settings">
+		<cconfiguration id="com.android.toolchain.gcc.1288619998">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.android.toolchain.gcc.1288619998" moduleId="org.eclipse.cdt.core.settings" name="Default">
+				<externalSettings>
+					<externalSetting/>
+				</externalSettings>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactName="${ProjName}" buildProperties="" description="" id="com.android.toolchain.gcc.1288619998" name="Default" parent="org.eclipse.cdt.build.core.emptycfg">
+					<folderInfo id="com.android.toolchain.gcc.1288619998.1933534758" name="/" resourcePath="">
+						<toolChain id="com.android.toolchain.gcc.446920278" name="Android GCC" superClass="com.android.toolchain.gcc" unusedChildren="com.android.gcc.compiler">
+							<targetPlatform binaryParser="org.eclipse.cdt.core.ELF" id="com.android.targetPlatform.231661904" isAbstract="false" superClass="com.android.targetPlatform"/>
+							<builder id="com.android.builder.161751259" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Android Builder" superClass="com.android.builder"/>
+							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.cygwin.182126976" name="Cygwin C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.cygwin">
+								<option id="gnu.cpp.compiler.option.include.paths.2133059696" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="/usr/include/c++"/>
+									<listOptionValue builtIn="false" value="/usr/include"/>
+									<listOptionValue builtIn="false" value="/Library/android-ndk-r10e/platforms/android-19/arch-arm/usr/include"/>
+									<listOptionValue builtIn="false" value="/Library/android-ndk-r10e/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64/lib/gcc/arm-linux-androideabi/4.9/include"/>
+									<listOptionValue builtIn="false" value="/Library/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.9/include"/>
+									<listOptionValue builtIn="false" value="/Library/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.9/libs/armeabi/include"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.cygwin.2038751902" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input.cygwin"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.cygwin.380115387" name="Cygwin C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.cygwin">
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.533598564" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
+									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
+									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
+								</inputType>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.c.compiler.cygwin.1908821973" name="Cygwin C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.cygwin">
+								<option id="gnu.c.compiler.option.include.paths.621099679" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="/usr/include/c++"/>
+									<listOptionValue builtIn="false" value="/usr/include"/>
+									<listOptionValue builtIn="false" value="/Library/android-ndk-r10e/platforms/android-19/arch-arm/usr/include"/>
+									<listOptionValue builtIn="false" value="/Library/android-ndk-r10e/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64/lib/gcc/arm-linux-androideabi/4.9/include"/>
+									<listOptionValue builtIn="false" value="/Library/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.9/include"/>
+									<listOptionValue builtIn="false" value="/Library/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.9/libs/armeabi/include"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.cygwin.264937508" superClass="cdt.managedbuild.tool.gnu.c.compiler.input.cygwin"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+					<folderInfo id="com.android.toolchain.gcc.1288619998.181779439" name="/" resourcePath="src">
+						<toolChain id="com.android.toolchain.gcc.1557004043" name="Android GCC" superClass="com.android.toolchain.gcc" unusedChildren="com.android.gcc.compiler">
+							<targetPlatform binaryParser="org.eclipse.cdt.core.ELF" id="com.android.targetPlatform" isAbstract="false" superClass="com.android.targetPlatform"/>
+							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.cygwin.2066765013" name="Cygwin C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.cygwin.182126976">
+								<option id="gnu.cpp.compiler.option.include.paths.133195170" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="/usr/include/c++"/>
+									<listOptionValue builtIn="false" value="/usr/include"/>
+									<listOptionValue builtIn="false" value="/Library/android-ndk-r10e/platforms/android-19/arch-arm/usr/include"/>
+									<listOptionValue builtIn="false" value="/Library/android-ndk-r10e/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64/lib/gcc/arm-linux-androideabi/4.9/include"/>
+									<listOptionValue builtIn="false" value="/Library/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.9/include"/>
+									<listOptionValue builtIn="false" value="/Library/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.9/libs/armeabi/include"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.cygwin.606046598" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input.cygwin"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.cygwin.1194207867" name="Cygwin C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.cygwin.380115387"/>
+							<tool id="cdt.managedbuild.tool.gnu.c.compiler.cygwin.1730838144" name="Cygwin C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.cygwin.1908821973">
+								<option id="gnu.c.compiler.option.include.paths.1892035291" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="/usr/include/c++"/>
+									<listOptionValue builtIn="false" value="/usr/include"/>
+									<listOptionValue builtIn="false" value="/Library/android-ndk-r10e/platforms/android-19/arch-arm/usr/include"/>
+									<listOptionValue builtIn="false" value="/Library/android-ndk-r10e/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64/lib/gcc/arm-linux-androideabi/4.9/include"/>
+									<listOptionValue builtIn="false" value="/Library/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.9/include"/>
+									<listOptionValue builtIn="false" value="/Library/android-ndk-r10e/sources/cxx-stl/gnu-libstdc++/4.9/libs/armeabi/include"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.cygwin.678849224" superClass="cdt.managedbuild.tool.gnu.c.compiler.input.cygwin"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+	</storageModule>
+	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+		<project id="kepler.null.316123994" name="kepler"/>
+	</storageModule>
+	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="Default">
+			<resource resourceType="PROJECT" workspacePath="/kepler"/>
+		</configuration>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+	<storageModule moduleId="scannerConfiguration">
+		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		<scannerConfigBuildInfo instanceId="com.android.toolchain.gcc.1288619998;com.android.toolchain.gcc.1288619998.1933534758;cdt.managedbuild.tool.gnu.c.compiler.cygwin.base.48457799;cdt.managedbuild.tool.gnu.c.compiler.input.cygwin.1300491143">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCWinManagedMakePerProjectProfileC"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="com.android.toolchain.gcc.1288619998;com.android.toolchain.gcc.1288619998.1933534758;cdt.managedbuild.tool.gnu.cpp.compiler.cygwin.182126976;cdt.managedbuild.tool.gnu.cpp.compiler.input.cygwin.2038751902">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCWinManagedMakePerProjectProfileCPP"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="com.android.toolchain.gcc.1288619998;com.android.toolchain.gcc.1288619998.1933534758;cdt.managedbuild.tool.gnu.c.compiler.cygwin.base.2041563023;cdt.managedbuild.tool.gnu.c.compiler.input.cygwin.858139025">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCWinManagedMakePerProjectProfileC"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="com.android.toolchain.gcc.1288619998;com.android.toolchain.gcc.1288619998.1933534758;com.android.gcc.compiler.876731377;com.android.gcc.inputType.1904254209">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.android.AndroidPerProjectProfile"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="com.android.toolchain.gcc.1288619998;com.android.toolchain.gcc.1288619998.1933534758;cdt.managedbuild.tool.gnu.cpp.compiler.cygwin.base.779558695;cdt.managedbuild.tool.gnu.cpp.compiler.input.cygwin.1504637516">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCWinManagedMakePerProjectProfileCPP"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="com.android.toolchain.gcc.1288619998;com.android.toolchain.gcc.1288619998.1933534758;com.android.gcc.compiler.1901107427;com.android.gcc.inputType.1838038788">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.android.AndroidPerProjectProfile"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="com.android.toolchain.gcc.1288619998;com.android.toolchain.gcc.1288619998.1933534758;com.android.gcc.compiler.1763297612;com.android.gcc.inputType.1927042308">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.android.AndroidPerProjectProfile"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="com.android.toolchain.gcc.1288619998;com.android.toolchain.gcc.1288619998.1933534758;cdt.managedbuild.tool.gnu.cpp.compiler.cygwin.base.161085084;cdt.managedbuild.tool.gnu.cpp.compiler.input.cygwin.1766191714">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCWinManagedMakePerProjectProfileCPP"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="com.android.toolchain.gcc.1288619998;com.android.toolchain.gcc.1288619998.1933534758;cdt.managedbuild.tool.gnu.c.compiler.cygwin.1908821973;cdt.managedbuild.tool.gnu.c.compiler.input.cygwin.264937508">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCWinManagedMakePerProjectProfileC"/>
+		</scannerConfigBuildInfo>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
+</cproject>

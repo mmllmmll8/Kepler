@@ -1,0 +1,9 @@
+eclipse.preferences.version=1
+environment/project/com.android.toolchain.gcc.1288619998/CPLUS_INCLUDE_PATH/delimiter=\:
+environment/project/com.android.toolchain.gcc.1288619998/CPLUS_INCLUDE_PATH/operation=append
+environment/project/com.android.toolchain.gcc.1288619998/CPLUS_INCLUDE_PATH/value=/usr/include/c++
+environment/project/com.android.toolchain.gcc.1288619998/C_INCLUDE_PATH/delimiter=\:
+environment/project/com.android.toolchain.gcc.1288619998/C_INCLUDE_PATH/operation=append
+environment/project/com.android.toolchain.gcc.1288619998/C_INCLUDE_PATH/value=/usr/include
+environment/project/com.android.toolchain.gcc.1288619998/append=true
+environment/project/com.android.toolchain.gcc.1288619998/appendContributed=true
