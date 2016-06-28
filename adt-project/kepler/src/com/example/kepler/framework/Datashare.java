@@ -1,5 +1,5 @@
 package com.example.kepler.framework;
-
+//封装shareprefrence,可以不使用
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -41,6 +41,14 @@ public class Datashare {
         }
     }
 
+    public boolean Savedata(String name,int value,String sharename){
+        synchronized (this) {
+            editor = shares.get(sharename).edit();
+            editor.putInt(name, value);
+            return editor.commit();
+        }
+    }
+    
     public float getfloat(String name,String sharename){
         synchronized (this) {
             SharedPreferences share = shares.get(sharename);
@@ -66,6 +74,14 @@ public class Datashare {
         synchronized (this) {
             SharedPreferences share = shares.get(sharename);
             String content = share.getString(name, "");
+            return content;
+        }
+    }
+    
+    public int getint(String sharename,String name){
+        synchronized (this) {
+            SharedPreferences share = shares.get(sharename);
+            int content = share.getInt("name", 10000);
             return content;
         }
     }

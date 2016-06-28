@@ -45,7 +45,7 @@ public class getpoi {
 		query.setPageSize(30);
 		if(rec_sql_Tool==null){
 			rec_sql_Tool = new Sql_Tool("recinfo",context,REC_Info.class);
-			nrec_sql_Tool = new Sql_Tool("nrecinfo",context,REC_Info.class);			
+			//nrec_sql_Tool = new Sql_Tool("nrecinfo",context,REC_Info.class);			
 		}
 		PoiSearch poisearch = new PoiSearch(context, query);
 		poisearch.setOnPoiSearchListener(new OnPoiSearchListener(){
@@ -58,7 +58,7 @@ public class getpoi {
 						REC_Info rec_info = new REC_Info();
 						Datacenter datacenter = Datacenter.getDatacenter(context);
 						Datashare share = datacenter.getshared();
-						if(poiItems!=null ){
+						if(poiItems!=null){
 							//生成预存的rec数据
 							Iterator itr = poiItems.iterator();
 							JSONArray pois = new JSONArray();
@@ -68,7 +68,6 @@ public class getpoi {
 								POI_Info po = new POI_Info();
 								JSONObject poi = new JSONObject();
 								PoiItem nextObj = (PoiItem) itr.next();
-								
 								try {
 									poi.put("lat", nextObj.getLatLonPoint().getLatitude());
 									poi.put("lng", nextObj.getLatLonPoint().getLongitude());

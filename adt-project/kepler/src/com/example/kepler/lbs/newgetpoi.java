@@ -1,4 +1,5 @@
 package com.example.kepler.lbs;
+//弃用
 import android.content.Context;
 
 import com.amap.api.services.core.AMapException;

@@ -32,7 +32,7 @@ public class gaode implements AMapLocationListener{
 
 	LatLng point;
 	double Accuracy;
-	int scantime = 1000*60;
+	int scantime = 1000*10;
 	float scanwide = 80;
 	Context context = null;
 	//声明AMapLocationClient类对象
@@ -45,11 +45,12 @@ public class gaode implements AMapLocationListener{
 	
 	@TargetApi(Build.VERSION_CODES.GINGERBREAD)
 	@SuppressLint("NewApi")
-	public gaode(Context activity,Callback callback)
+	public gaode(Context activity,Callback callback,int time)
 	{
 		this.context = activity;
 		this.callback = callback;
-		this.lasttime = false;
+		this.lasttime = true;
+		this.scantime = time;
 		StrictMode.ThreadPolicy policy=new StrictMode.ThreadPolicy.Builder().permitAll().build();
 		StrictMode.setThreadPolicy(policy);
 		init();
@@ -119,30 +120,30 @@ public class gaode implements AMapLocationListener{
 			}
 			Datashare datashare = Datacenter.getDatacenter(context).getshared();
 			datashare.Savedata("gaode",gaode.toString(),"exam");
-	        Log.e("latlng", String.valueOf(geoLat)+" "+ String.valueOf(geoLng));
+	        Log.e("now latlng", String.valueOf(geoLat)+" "+ String.valueOf(geoLng));
 	        LatLng nowll = new LatLng(geoLat, geoLng);
 			Date now=new Date();
 			String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(now);
-
-			Log.e("now latlng", String.valueOf(datashare.getfloat("lat","exam"))+" "+ String.valueOf(datashare.getfloat("lng","exam")));
+			Log.e("last latlng", String.valueOf(datashare.getfloat("lat","exam"))+" "+ String.valueOf(datashare.getfloat("lng","exam")));
 			point = new LatLng(datashare.getfloat("lat","exam"),datashare.getfloat("lng","exam"));
-	        Accuracy = amapLocation.getAccuracy();
-	        Accuracy = Accuracy<100?100:Accuracy;
+	        //point = new LatLng(0,0);
+			Accuracy = amapLocation.getAccuracy();
+	        double Accurac = Accuracy<100?100:Accuracy;
 			if((AMapUtils.calculateLineDistance(nowll,point)<=120)){
+				//没跳出地理围栏
 				if(lasttime){
-					lasttime = false;
-					Log.e("lasttime", "false");
-					Log.e("latlng", "record");
 					getpoi.start(
-							date,
-							Accuracy,
-							new LatLonPoint(geoLat, geoLng),
-							city,
-							context);
+						date,
+						Accurac,
+						new LatLonPoint(geoLat, geoLng),
+						city,
+						context);
+					lasttime = false;
 				}
 			}else{
-				lasttime = true;
 				Log.e("lasttime", "true");
+				//跳出了地理围栏
+				lasttime = true;
 			}
 			LBSInfo lbsInfo = new LBSInfo();
 			final SharedPreferences share = context.getSharedPreferences("exam",0);
@@ -159,6 +160,3 @@ public class gaode implements AMapLocationListener{
 	    }
 	}
 }
-//			LBS_info_mid lbs_info_mid = LBS_info_mid.getlbsinfomid(context);
-//			lbs_info_mid.addlbss(lbsInfo);
-//			lbs_info_mid.update();

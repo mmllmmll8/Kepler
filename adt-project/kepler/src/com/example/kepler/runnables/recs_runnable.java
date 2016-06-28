@@ -47,13 +47,14 @@ public class recs_runnable implements Runnable{
                 List<NameValuePair> formparams = new ArrayList<NameValuePair>();
                 formparams.add(new BasicNameValuePair("data", content));
                 formparams.add(new BasicNameValuePair("type", "record"));
+                Log.e("record",content);
                 UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams,"utf-8");
                 entity.setContentType("application/x-www-form-urlencoded;charset=utf-8");
                 post.setEntity(entity);
                 HttpResponse response=httpClient.execute(post);
                 if(response.getStatusLine().getStatusCode()==200)
                 {
-                	recSql_Tool.clean();
+                	//recSql_Tool.clean();
                 }
                 Log.e("haha",String.valueOf(response.getStatusLine().getStatusCode()));
             }

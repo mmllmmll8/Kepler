@@ -1,5 +1,5 @@
 package com.example.kepler.framework;
-
+//弃用
 import android.content.Context;
 import android.content.IntentSender;
 

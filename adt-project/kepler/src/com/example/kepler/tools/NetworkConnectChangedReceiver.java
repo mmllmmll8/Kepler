@@ -8,6 +8,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import com.example.kepler.runnables.lbss_runnable;
 import com.example.kepler.runnables.nrecs_runnable;
+import com.example.kepler.runnables.recs_runnable;
 
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
@@ -30,10 +31,12 @@ public class NetworkConnectChangedReceiver extends BroadcastReceiver{
     public static void init(Context context){
     	if(runnables==null){
     		runnables = new ArrayList<Runnable>();
-    		Runnable runnable1 = new nrecs_runnable(context);
+    		//Runnable runnable1 = new nrecs_runnable(context);
     		Runnable runnable2 = new lbss_runnable(context);
-    		runnables.add(runnable1);
-    		runnables.add(runnable2);    		
+    		Runnable runnable3 = new recs_runnable(context);
+    		//runnables.add(runnable1);
+    		runnables.add(runnable2); 
+    		runnables.add(runnable3);
     	}
     }
     
@@ -87,6 +90,7 @@ public class NetworkConnectChangedReceiver extends BroadcastReceiver{
 					HttpClient httpClient = new DefaultHttpClient();
 					HttpResponse response = httpClient.execute(httpGet);
 		            int code = response.getStatusLine().getStatusCode();
+		            Log.e("status code", String.valueOf(code));
 		            if(code==200)
 		            {
 		                Log.e("########LoginActivity","wifi!!!!!!!!!");

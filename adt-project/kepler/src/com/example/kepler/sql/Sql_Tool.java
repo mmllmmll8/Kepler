@@ -2,6 +2,7 @@ package com.example.kepler.sql;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Currency;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -69,6 +70,25 @@ public class Sql_Tool {
 	    	return jsonArray.toString();
     	}
     	return "";
+    }
+    
+    public void deletesql(String name,String key){
+    	//数据库操作-mysql
+		//final ContentValues cv = new ContentValues();
+		
+		final String ressql = name+"=?";
+        final String[] cv = new String[]{key}; 
+        for(int i = 0;i < cv.length;i++){
+        	Log.e(String.valueOf(i), cv[i]);
+        }
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub	
+				db.delete(table_name, ressql, cv);	
+				Log.e("delete", ressql);
+			}
+		}).start();
     }
     
 	public void addsql(Object object){

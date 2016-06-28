@@ -1,5 +1,5 @@
 package com.example.kepler.framework;
-
+//封装shareprefrence,可以不使用
 import android.content.Context;
 import android.content.SharedPreferences;
 

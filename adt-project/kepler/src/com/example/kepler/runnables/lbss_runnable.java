@@ -48,6 +48,7 @@ public class lbss_runnable implements Runnable{
                 List<NameValuePair> formparams = new ArrayList<NameValuePair>();
                 formparams.add(new BasicNameValuePair("data", content));
                 formparams.add(new BasicNameValuePair("type", "lbs"));
+                Log.e("lbs",content);
                 UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams,"utf-8");
                 entity.setContentType("application/x-www-form-urlencoded;charset=utf-8");
                 post.setEntity(entity);

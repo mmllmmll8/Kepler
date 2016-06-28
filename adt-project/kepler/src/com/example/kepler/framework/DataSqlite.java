@@ -1,4 +1,5 @@
 package com.example.kepler.framework;
+//封装sqlite,可以不使用
 import android.database.sqlite.SQLiteDatabase;
 import android.content.Context;
 import android.database.sqlite.SQLiteStatement;

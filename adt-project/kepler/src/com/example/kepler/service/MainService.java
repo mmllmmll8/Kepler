@@ -7,6 +7,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Process;
 import android.util.Log;
@@ -26,16 +27,13 @@ public class MainService extends Service implements MediaPlayer.OnCompletionList
 	gaode gaode_server;
 	MediaPlayer player;
 	watch awatch;
+	int scantime = 0;
 	@Override
 	public IBinder onBind(Intent arg0) {
 		// TODO Auto-generated method stub
 		Log.e("caonima", "service binder");
-//		awatch = new watch(getApplicationContext());
-//		awatch.createAppMonitor(Datacenter.getDatacenter(getApplicationContext()).getshared().getstring("exam", "id"));
-//		player = MediaPlayer.create(this, R.raw.empty);  
-//	    player.setOnCompletionListener(this);	
-//	    player.setLooping(true);
-//	    player.start(); 
+		Bundle bundle = arg0.getExtras();
+		scantime = bundle.getInt("scantime");
 		return null;
 	}
 	
@@ -77,7 +75,7 @@ public class MainService extends Service implements MediaPlayer.OnCompletionList
 		NetworkConnectChangedReceiver.init(context);
 		NetworkConnectChangedReceiver.connectServer();
 		
-		gaode_server = new gaode(context,callback);
+		gaode_server = new gaode(context,callback,scantime);
 		//填充wifi触发的runnable
 		final String rec_sql = "CREATE TABLE IF NOT EXISTS `recinfo` (" +
 					"`date`    TEXT NOT NULL," +
@@ -118,20 +116,3 @@ public class MainService extends Service implements MediaPlayer.OnCompletionList
 		startService(intent0);  
 	}
 }
-//		Notification notification = new Notification(
-//				R.drawable.ic_launcher,
-//				"wf update service is running",
-//                System.currentTimeMillis());  
-//
-//		PendingIntent pintent=PendingIntent.getService(this, 0, intent, 0);  
-//
-//        notification.setLatestEventInfo(
-//        		this, 
-//        		"WF Update Service", 
-//        		"wf update service is running！", 
-//        		pintent);  
-//
-//        //让该service前台运行，避免手机休眠时系统自动杀掉该服务  
-//        //如果 id 为 0 ，那么状态栏的 notification 将不会显示。  
-//
-//        startForeground(1, notification); 

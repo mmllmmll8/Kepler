@@ -1,4 +1,5 @@
 package com.example.kepler.lbs;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import android.content.Context;
@@ -23,33 +24,17 @@ public class baidu {
 		@Override
 		public void onReceiveLocation(BDLocation arg0) {
 			// TODO Auto-generated method stub
-			JSONObject job = new JSONObject();
-	        try {
-				job.put("lat", String.valueOf(arg0.getLatitude()));
-				job.put("lng", String.valueOf(arg0.getLongitude()));
-				job.put("accuracy", String.valueOf(arg0.getRadius()));
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	        
 	        Editor edit = share.edit();
-	        JSONObject gaode = new JSONObject();
+	        JSONObject baidu = new JSONObject();
 	        try {
-				gaode.put("lat", String.valueOf(String.valueOf(arg0.getLatitude())));
-				gaode.put("lng", String.valueOf(String.valueOf(arg0.getLongitude())));
+	        	baidu.put("lat", String.valueOf(String.valueOf(arg0.getLatitude())));
+	        	baidu.put("lng", String.valueOf(String.valueOf(arg0.getLongitude())));
 	        } catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
-	        
-			edit.putString("baidu", gaode.toString());
+	        }
+			edit.putString("baidu", baidu.toString());
 			edit.commit();
-//	        Message message = new Message();
-//	        Bundle bundle = new Bundle();
-//	        bundle.putString("type", "record");
-//	        bundle.putString("record", job.toString());
-//	        message.setData(bundle);
 		}
 	};
 	
